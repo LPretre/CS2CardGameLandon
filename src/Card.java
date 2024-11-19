@@ -34,4 +34,7 @@ public class Card {
         this.value = value;
     }
 
+    public String toString(){
+        return (rank + " of " + suit);
+    }
 }
