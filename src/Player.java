@@ -36,4 +36,21 @@ public class Player {
         this.points += points;
     }
 
+    /// Adds a card to the player's hand
+    public void addCard(Card newCard){
+        hand.add(newCard);
+    }
+
+    /// Returns a string representation of the player
+    public String toString(){
+        return name + " has " + points +
+                " points. \n" + name +
+                "'s hand: " + hand;
+    }
+
+    /// Returns the value of the player's entire hand
+    public int getHandValue(){
+
+    }
+
 }
