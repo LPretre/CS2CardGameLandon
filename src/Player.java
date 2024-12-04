@@ -16,6 +16,7 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
+        this.hand = new ArrayList<Card>();
         this.points = 0;
     }
 
@@ -50,7 +51,15 @@ public class Player {
 
     /// Returns the value of the player's entire hand
     public int getHandValue(){
+        int sum = 0;
+        for (Card card : hand){
+            sum += card.getValue();
+        }
+        return sum;
+    }
 
+    public void clearHand(){
+        this.hand = new ArrayList<Card>();
     }
 
 }

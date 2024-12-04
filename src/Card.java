@@ -4,6 +4,7 @@ public class Card {
     private String suit;
     private int value;
 
+    /// Constructs a card with a given suit, rank, and value
     public Card(String rank, String suit, int value) {
         this.rank = rank;
         this.suit = suit;
