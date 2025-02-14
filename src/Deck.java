@@ -1,12 +1,15 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
-public class Deck {
+public class Deck extends JFrame {
     /// Uses an ArrayList to store a deck of cards
     private ArrayList<Card> cards;
     /// Uses an integer to indicate how many cards are left in the deck
     private int cardsLeft;
+    private Image[] images;
 
     /// Construct a deck of cards given suits and ranks
-    public Deck(String[] ranks, String[] suits, int[] values) {
+    public Deck(String[] ranks, String[] suits, int[] values, Image[] cardImages) {
         cards = new ArrayList<Card>();
         for (String suit : suits){
             for (int j = 0; j < ranks.length; j++){
@@ -50,3 +53,5 @@ public class Deck {
         cardsLeft = cards.size();
     }
 }
+
+

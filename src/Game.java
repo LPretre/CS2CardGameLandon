@@ -1,9 +1,11 @@
 import java.util.Scanner;
+import java.awt.*;
 
 public class Game {
     private Player user;
     private Player house;
     private Deck gameDeck;
+    private GameView viewer;
 
     /// Initialize arrays of the elements in a deck
     private final String[] suits = {"Clubs", "Hearts", "Diamonds", "Spades"};
@@ -14,19 +16,21 @@ public class Game {
     public Game(String name) {
         user = new Player(name);
         house = new Player("Dealer");
-        gameDeck = new Deck(ranks, suits, values);
+        viewer = new GameView(this);
+        gameDeck = new Deck(ranks, suits, values, viewer.getCardImages());
     }
 
-    public void printInstructions() {
-        System.out.println("Welcome to Blackjack by Landon! \n" +
-                "Your goal is to get your hand to equal a total value of 21.\n" +
-                "If your hand goes over 21, you bust and automatically lose that hand.\n" +
-                "Aces have a value of 11, sorry! \n" +
-                "A hand win gets you 100 points; a loss loses you 100.\n" +
-                "Have fun!");
-    }
+//    public void printInstructions() {
+//        System.out.println("Welcome to Blackjack by Landon! \n" +
+//                "Your goal is to get your hand to equal a total value of 21.\n" +
+//                "If your hand goes over 21, you bust and automatically lose that hand.\n" +
+//                "Aces have a value of 11, sorry! \n" +
+//                "A hand win gets you 100 points; a loss loses you 100.\n" +
+//                "Have fun!");
+//    }
 
     public void playGame() {
+        viewer.repaint();
         System.out.println("Dealing the first hand...");
         gameDeck.shuffle();
 
@@ -89,7 +93,7 @@ public class Game {
 
     /// Starts the game, plays from the top
     public void start() {
-        printInstructions();
+//        printInstructions();
         Scanner scanner = new Scanner(System.in);
         while (true) {
             playGame();
