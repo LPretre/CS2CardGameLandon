@@ -6,9 +6,12 @@ public class Game {
     private Player house;
     private Deck gameDeck;
     private GameView viewer;
+    private boolean didWin;
+    private boolean didLose;
+    private boolean didTie;
 
-    /// Initialize arrays of the elements in a deck
-    private final String[] suits = {"Clubs", "Hearts", "Diamonds", "Spades"};
+    // Initialize arrays of the elements in a deck
+    private final String[] suits = {"Spades", "Hearts", "Diamonds", "Clubs"};
     private final String[] ranks = {"Ace", "Two", "Three", "Four", "Five", "Six",
             "Seven", "Eight", "Nine", "Ten", "Jack", "Queen", "King"};
     private final int[] values = {11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10};
@@ -17,9 +20,31 @@ public class Game {
         user = new Player(name);
         house = new Player("Dealer");
         viewer = new GameView(this);
-        gameDeck = new Deck(ranks, suits, values, viewer.getCardImages());
+        gameDeck = new Deck(ranks, suits, values, viewer);
+        didWin = false;
+        didLose = false;
+        didTie = false;
     }
 
+    //Return the game statuses
+    public boolean getWin(){
+        return didWin;
+    }
+    public boolean getLoss(){
+        return didLose;
+    }
+    public boolean getTie(){
+        return didTie;
+    }
+    //Return the house player
+    public Player getHouse(){
+        return house;
+    }
+
+    //Return the user player
+    public Player getUser(){
+        return user;
+    }
 //    public void printInstructions() {
 //        System.out.println("Welcome to Blackjack by Landon! \n" +
 //                "Your goal is to get your hand to equal a total value of 21.\n" +
@@ -30,6 +55,9 @@ public class Game {
 //    }
 
     public void playGame() {
+        didWin = false;
+        didLose = false;
+        didTie = false;
         viewer.repaint();
         System.out.println("Dealing the first hand...");
         gameDeck.shuffle();
@@ -39,6 +67,7 @@ public class Game {
         user.addCard(gameDeck.deal());
         house.addCard(gameDeck.deal());
         user.addCard(gameDeck.deal());
+        viewer.repaint();
 
         System.out.println("Your hand: " + user.getHand() + ". Your hand value: " + user.getHandValue());
         System.out.println("Dealer's visible card: " + house.getHand().get(0));
@@ -47,6 +76,8 @@ public class Game {
         if (user.getHandValue() == 21){
             System.out.println("Blackjack! You Win!");
             user.addPoints(100);
+            didWin = true;
+            viewer.repaint();
             return;
         }
         /// Run the player's turns
@@ -57,10 +88,13 @@ public class Game {
             String choice = scanner.nextLine();
             if (choice.equals("hit")) {
                 user.addCard(gameDeck.deal());
+                viewer.repaint();
                 System.out.println("Your hand: " + user.getHand() + ". Your hand value: " + user.getHandValue());
                 if (user.getHandValue() > 21) {
                     System.out.println("You busted!");
                     user.addPoints(-100);
+                    didLose = true;
+                    viewer.repaint();
                     return; /// End the round
                 }
             } else if (choice.equals("stand")) {
@@ -76,6 +110,7 @@ public class Game {
         System.out.println("Dealer's hand: " + house.getHand() + ". Dealer's hand value: " + house.getHandValue());
         while (house.getHandValue() < 17) {
             house.addCard(gameDeck.deal());
+            viewer.repaint();
             System.out.println("Dealer's hand: " + house.getHand() + ". Dealer's hand value: " + house.getHandValue());
         }
 
@@ -83,11 +118,17 @@ public class Game {
         if (house.getHandValue() > 21 || user.getHandValue() > house.getHandValue()) {
             System.out.println("You win this hand!");
             user.addPoints(100);
+            didWin = true;
+            viewer.repaint();
         } else if (user.getHandValue() == house.getHandValue()) {
             System.out.println("It's a tie!");
+            didTie = true;
+            viewer.repaint();
         } else {
             System.out.println("Dealer wins this hand.");
             user.addPoints(-100);
+            didLose = true;
+            viewer.repaint();
         }
     }
 

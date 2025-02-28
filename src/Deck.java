@@ -6,14 +6,16 @@ public class Deck extends JFrame {
     private ArrayList<Card> cards;
     /// Uses an integer to indicate how many cards are left in the deck
     private int cardsLeft;
-    private Image[] images;
+    private GameView viewer;
 
-    /// Construct a deck of cards given suits and ranks
-    public Deck(String[] ranks, String[] suits, int[] values, Image[] cardImages) {
+    /// Construct a deck of cards given suits and ranks, assigns each one it's proper image
+    public Deck(String[] ranks, String[] suits, int[] values, GameView viewer) {
         cards = new ArrayList<Card>();
-        for (String suit : suits){
-            for (int j = 0; j < ranks.length; j++){
-                cards.add(new Card(ranks[j], suit, values[j]));
+        int cardNumber = 0;
+        for (int j = 0; j < ranks.length; j++){
+            for (String suit : suits){
+                cards.add(new Card(ranks[j], suit, values[j], viewer.getCardImages()[cardNumber], viewer));
+                cardNumber++;
             }
         }
         this.cardsLeft = suits.length * ranks.length;
